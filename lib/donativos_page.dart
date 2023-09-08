@@ -17,7 +17,7 @@ class DonativosPage extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              leading: Image.asset("assets/paypal_logo.png"),
+              leading: Image.asset("assets/icons/paypal_logo.png"),
               trailing: Text(
                 "777",
                 style: TextStyle(fontSize: 32),
@@ -25,7 +25,7 @@ class DonativosPage extends StatelessWidget {
             ),
             SizedBox(height: 24),
             ListTile(
-              leading: Image.asset("assets/creditcard_logo.png"),
+              leading: Image.asset("assets/icons/creditcard_logo.png"),
               trailing: Text(
                 "999",
                 style: TextStyle(fontSize: 32),

@@ -1,3 +1,4 @@
+import 'package:donativos/donativos_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,32 +9,72 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // double total
+  int donacionesTotal = 10000;
+  int donacionesAcumuladas = 0;
+  double progress = 0.0;
   int? currentSelectedRadio;
+  int? currentSelectedDrop;
   var assetsRadioGroup = {
-    0: "assets/paypal_logo.png",
-    1: "assets/creditcard_logo.png",
+    0: "assets/icons/paypal_logo.png",
+    1: "assets/icons/creditcard_logo.png",
   };
   var radioGroup = {
     0: "Paypal",
     1: "Tarjeta",
   };
+  var dropDownGroup = {
+    0: "100",
+    1: "300",
+    2: "800",
+    3: "1050",
+    4: "9999",
+  };
 
-  // TODO: completar metodo para generar los Radios
+  // completar metodo para generar los Radios
   // Es posible utilizar .map para mapear n elementos
   radioGroupGenerator() {
-    return [];
+    return radioGroup.entries
+        .map(
+          (entry) => ListTile(
+            leading: Image.asset(
+              "${assetsRadioGroup[entry.key]}",
+              width: 48,
+            ),
+            title: Text("${entry.value}"),
+            trailing: Radio(
+              value: entry.key,
+              groupValue: currentSelectedRadio,
+              onChanged: (newValue) {
+                currentSelectedRadio = newValue;
+                setState(() {});
+              },
+            ),
+          ),
+        )
+        .toList();
   }
 
-  // TODO: completar metodo para generar los DropDownMenuItems
+  // completar metodo para generar los DropDownMenuItems
   // Es posible utilizar .map como en la de los radios
   dropDownItemsGenerator() {
-    return [];
+    return dropDownGroup.entries
+        .map(
+          (entry) => DropdownMenuEntry(
+            value: entry.key,
+            label: "${entry.value}",
+          ),
+        )
+        .toList();
   }
 
-  // TODO: metodo para calcular las donaciones
+  //  metodo para calcular las donaciones
   // identifica si la donacion es por paypal o tarjeta
   // utiliza datos de los radio buttons y drop down
-  void calcularDonaciones() {}
+  void calcularDonaciones() {
+    donacionesAcumuladas += int.parse(dropDownGroup[currentSelectedDrop]!);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +112,26 @@ class _HomePageState extends State<HomePage> {
             // como parametro a "items" del DropdownButton
             ListTile(
               title: Text("Cantidad a donar:"),
+              trailing: DropdownMenu(
+                dropdownMenuEntries: dropDownItemsGenerator(),
+                onSelected: (newValue) {
+                  currentSelectedDrop = newValue as int?;
+                  setState(() {});
+                },
+              ),
             ),
-            // TODO: Agregar LinearProgressIndicator con altura de 20
-            // TODO: Agregar Text con el % de donacion y max 2 decimales
-            // TODO: Agregar Boton de DONAR y logica necesaria
+            LinearProgressIndicator(
+              value: donacionesAcumuladas / donacionesTotal,
+              minHeight: 24,
+            ),
+            Text(
+                "${(donacionesAcumuladas / donacionesTotal * 100) > 100 ? 100 : (donacionesAcumuladas / donacionesTotal * 100)}%"),
+            MaterialButton(
+              onPressed: () {
+                calcularDonaciones();
+              },
+              child: Text("Donar"),
+            )
           ],
         ),
       ),
@@ -82,7 +139,12 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.remove_red_eye),
         tooltip: "Ver donativos",
         onPressed: () {
-          // TODO: navegar a la pagina de donativos
+          // Navegar a la pagina de donativos
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => DonativosPage(),
+            ),
+          );
         },
       ),
     );
