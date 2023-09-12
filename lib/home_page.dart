@@ -81,6 +81,21 @@ class _HomePageState extends State<HomePage> {
       donacionesTarjeta += int.parse(dropDownGroup[currentSelectedDrop]!);
       donacionesAcumuladas += donacionesTarjeta;
     }
+    if (getDonationsProgress() >= 100) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(
+            content: Text(
+              "Gracias! Llegamos a la meta de donaciones.",
+              style: TextStyle(
+                color: Colors.grey[200],
+              ),
+            ),
+            backgroundColor: Colors.purple[700],
+          ),
+        );
+    }
     setState(() {});
   }
 
@@ -135,11 +150,15 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
+            SizedBox(height: 48),
             LinearProgressIndicator(
               value: donacionesAcumuladas / donacionesTotal,
-              minHeight: 24,
+              minHeight: 12,
             ),
-            Text("${getDonationsProgress()}%"),
+            Text(
+              "${getDonationsProgress()}%",
+              textAlign: TextAlign.center,
+            ),
             MaterialButton(
               onPressed: () {
                 calcularDonaciones();
@@ -150,7 +169,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.remove_red_eye),
+        child: Icon(Icons.next_plan),
         tooltip: "Ver donativos",
         onPressed: () {
           // TODO: pasar datos y navegar a la pagina de donativos
