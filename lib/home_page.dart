@@ -76,11 +76,10 @@ class _HomePageState extends State<HomePage> {
   void calcularDonaciones() {
     if (currentSelectedRadio != null && currentSelectedRadio == 0) {
       donacionesPaypal += int.parse(dropDownGroup[currentSelectedDrop]!);
-      donacionesAcumuladas += donacionesPaypal;
     } else if (currentSelectedRadio != null && currentSelectedRadio == 1) {
       donacionesTarjeta += int.parse(dropDownGroup[currentSelectedDrop]!);
-      donacionesAcumuladas += donacionesTarjeta;
     }
+    donacionesAcumuladas = donacionesPaypal + donacionesTarjeta;
     if (getDonationsProgress() >= 100) {
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()

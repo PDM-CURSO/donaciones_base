@@ -19,7 +19,7 @@ class DonativosPage extends StatelessWidget {
             ListTile(
               leading: Image.asset("assets/icons/paypal_logo.png"),
               trailing: Text(
-                "777",
+                "777", // sustituir por los datos que recibimos
                 style: TextStyle(fontSize: 32),
               ),
             ),
