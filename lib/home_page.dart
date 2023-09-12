@@ -84,6 +84,13 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  // Metodo para retornar el progreso y mostrar su porcentaje
+  double getDonationsProgress() {
+    return (donacionesAcumuladas / donacionesTotal * 100) > 100
+        ? 100
+        : (donacionesAcumuladas / donacionesTotal * 100);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,8 +139,7 @@ class _HomePageState extends State<HomePage> {
               value: donacionesAcumuladas / donacionesTotal,
               minHeight: 24,
             ),
-            Text(
-                "${(donacionesAcumuladas / donacionesTotal * 100) > 100 ? 100 : (donacionesAcumuladas / donacionesTotal * 100)}%"),
+            Text("${getDonationsProgress()}%"),
             MaterialButton(
               onPressed: () {
                 calcularDonaciones();
