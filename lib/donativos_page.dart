@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DonativosPage extends StatelessWidget {
-  // TODO: pasar parametros
+  // TODO: recibir parametros y mostrar datos respectivos
   DonativosPage({
     Key? key,
   }) : super(key: key);
@@ -40,7 +40,7 @@ class DonativosPage extends StatelessWidget {
                 style: TextStyle(fontSize: 32),
               ),
             ),
-            // TODO: mostrar imagen de "Gracias" solo si se ha logrado la meta de 10,000 en donaciones
+            // TODO: mostrar imagen de "Gracias" debajo de las donaciones solo si se ha logrado la meta de 10,000 en donaciones
           ],
         ),
       ),

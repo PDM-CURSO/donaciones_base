@@ -12,6 +12,8 @@ class _HomePageState extends State<HomePage> {
   // double total
   int donacionesTotal = 10000;
   int donacionesAcumuladas = 0;
+  int donacionesPaypal = 0;
+  int donacionesTarjeta = 0;
   double progress = 0.0;
   int? currentSelectedRadio;
   int? currentSelectedDrop;
@@ -68,11 +70,17 @@ class _HomePageState extends State<HomePage> {
         .toList();
   }
 
-  //  metodo para calcular las donaciones
+  // Metodo para calcular las donaciones
   // identifica si la donacion es por paypal o tarjeta
   // utiliza datos de los radio buttons y drop down
   void calcularDonaciones() {
-    donacionesAcumuladas += int.parse(dropDownGroup[currentSelectedDrop]!);
+    if (currentSelectedRadio != null && currentSelectedRadio == 0) {
+      donacionesPaypal += int.parse(dropDownGroup[currentSelectedDrop]!);
+      donacionesAcumuladas += donacionesPaypal;
+    } else if (currentSelectedRadio != null && currentSelectedRadio == 1) {
+      donacionesTarjeta += int.parse(dropDownGroup[currentSelectedDrop]!);
+      donacionesAcumuladas += donacionesTarjeta;
+    }
     setState(() {});
   }
 
@@ -107,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                 children: radioGroupGenerator(),
               ),
             ),
-            // TODO: Agregar DropdownButton en el trailing
+            // Agregar DropdownButton en el trailing
             // utilizar el metodo dropDownItemsGenerator() para pasar
             // como parametro a "items" del DropdownButton
             ListTile(
@@ -139,7 +147,7 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.remove_red_eye),
         tooltip: "Ver donativos",
         onPressed: () {
-          // Navegar a la pagina de donativos
+          // TODO: pasar datos y navegar a la pagina de donativos
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => DonativosPage(),
